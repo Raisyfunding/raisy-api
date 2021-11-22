@@ -16,9 +16,11 @@ app.use(
 
 require("./models/account");
 
+app.use(require("./apis"));
+
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: "*" }));
 app.options("*", cors());
 
 const connect = () => {

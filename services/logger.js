@@ -13,7 +13,7 @@ const level = () => {
 	const isDevelopment = env === "development";
 	return isDevelopment ? "debug" : "info";
 	// TODO change back to prod logging at some point
-	return "debug";
+	// return "debug";
 };
 
 const colors = {
