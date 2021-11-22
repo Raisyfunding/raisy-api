@@ -8,17 +8,15 @@ const port = process.env.PORT || 5001;
 
 const Logger = require("./services/logger");
 
-app.use(
-	bodyParser.urlencoded({
-		extended: false,
-	})
-);
-
 require("./models/account");
 
-app.use(require("./apis"));
-
+app.use(
+	bodyParser.urlencoded({
+		extended: true,
+	})
+);
 app.use(bodyParser.json());
+
 app.use(express.json());
 
 app.use(cors());
@@ -34,6 +32,8 @@ app.use(function (req, res, next) {
 	);
 	next();
 });
+
+app.use(require("./apis"));
 
 const connect = () => {
 	const uri = process.env.DB_URL;

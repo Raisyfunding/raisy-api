@@ -12,7 +12,6 @@ const Logger = require("../services/logger");
 router.post("/getToken", async (req, res) => {
 	let address = req.body.address;
 	let isAddress = ethers.utils.isAddress(address);
-
 	if (!isAddress) {
 		return res.json({
 			status: "failed",
