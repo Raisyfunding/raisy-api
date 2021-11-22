@@ -20,8 +20,9 @@ app.use(require("./apis"));
 
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(cors({ origin: "*" }));
-app.options("*", cors());
+
+app.use(cors());
+// app.options("*", cors());
 
 const connect = () => {
 	const uri = process.env.DB_URL;
