@@ -25,11 +25,12 @@ router.post("/campaigndetails", auth, async (req, res) => {
 		signature,
 		retrievedAddr
 	);
-	if (!isValidsignature)
+	if (!isValidsignature) {
 		return res.status(400).json({
 			status: "failed",
 			data: "Invalid signature from user",
 		});
+	}
 
 	let campaignId = req.body.campaignId;
 	let title = req.body.title;
@@ -39,6 +40,17 @@ router.post("/campaigndetails", auth, async (req, res) => {
 	let nbMilestones = req.body.nbMilestones;
 	let pctReleasePerMilestone = req.body.pctReleasePerMilestone;
 	let endAt = req.body.endAt;
+
+	let pctSum = pctReleasePerMilestone.reduce((acc, cur) => {
+		return acc + cur;
+	}, 0);
+
+	if (pctSum !== 10000) {
+		return res.status(400).json({
+			status: "failed",
+			data: "Release percentages don't add up to 100%",
+		});
+	}
 
 	let campaign = await Campaign.findOne({ campaignId: campaignId });
 
