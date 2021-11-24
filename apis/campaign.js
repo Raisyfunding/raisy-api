@@ -41,16 +41,16 @@ router.post("/campaigndetails", auth, async (req, res) => {
 	let pctReleasePerMilestone = req.body.pctReleasePerMilestone;
 	let endAt = req.body.endAt;
 
-	let pctSum = pctReleasePerMilestone.reduce((acc, cur) => {
-		return acc + cur;
-	}, 0);
+	// let pctSum = pctReleasePerMilestone.reduce((acc, cur) => {
+	// 	return acc + cur;
+	// }, 0);
 
-	if (pctSum !== 10000) {
-		return res.status(400).json({
-			status: "failed",
-			data: "Release percentages don't add up to 100%",
-		});
-	}
+	// if (pctSum !== 10000) {
+	// 	return res.status(400).json({
+	// 		status: "failed",
+	// 		data: "Release percentages don't add up to 100%",
+	// 	});
+	// }
 
 	let campaign = await Campaign.findOne({ campaignId: campaignId });
 
