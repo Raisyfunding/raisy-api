@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const Logger = require("../services/logger");
 const auth = require("./middleware/auth");
 const Account = mongoose.model("Account");
+const toLowerCase = require("../utils/utils");
 
 const extractAddress = require("../services/address.utils");
 
