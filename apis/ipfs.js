@@ -82,7 +82,7 @@ router.post("/uploadCampaignImage2Server", auth, async (req, res) => {
 				imgData.indexOf(";base64")
 			);
 
-			let imageFileName = `${address}${title.trim()}.${extension}`;
+			let imageFileName = `${address}${title.replace(" ", "")}.${extension}`;
 			imgData = imgData.replace(`data:image\/${extension};base64,`, "");
 
 			fs.writeFile(uploadPath + imageFileName, imgData, "base64", (err) => {
