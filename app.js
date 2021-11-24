@@ -9,6 +9,7 @@ const port = process.env.PORT || 5001;
 const Logger = require("./services/logger");
 
 require("./models/account");
+require("./models/campaign");
 
 app.use(function (req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");

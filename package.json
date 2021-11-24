@@ -12,6 +12,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@pinata/sdk": "^1.1.23",
 		"@sideway/address": "^4.1.1",
 		"axios": "^0.21.1",
 		"body-parser": "^1.19.0",
