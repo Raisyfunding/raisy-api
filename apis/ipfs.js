@@ -1,7 +1,7 @@
 require("dotenv").config();
 const fs = require("fs");
 const formidable = require("formidable");
-const Logger = require("../services/Logger");
+const Logger = require("../services/logger");
 const extractAddress = require("../services/address.utils");
 const router = require("express").Router();
 const pinataSDK = require("@pinata/sdk");
