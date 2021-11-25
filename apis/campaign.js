@@ -119,18 +119,17 @@ router.post("/newDonation", service_auth, async (req, res) => {
 		let campaignID = req.body.campaignId;
 		let donationAmount = req.body.amount;
 
-
 		let campaign = await Campaign.findOne({ campaignId: campaignID });
 
 		campaign.amountRaised += donationAmount;
 		campaign.nbDonations += 1;
-		campaign.lastDonationDate = Date.now();
+		// campaign.lastDonationDate = Date.now();
 
 		await campaign.save();
 
 		return res.json({});
 	} catch (error) {
-		return res.json({ status: "failed" });
+		return res.json({ status: "failed", error: error });
 	}
 });
 
