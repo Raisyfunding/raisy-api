@@ -14,6 +14,7 @@ const validateSignature = require("../apis/middleware/auth.sign");
 
 const Logger = require("../services/logger");
 const extractAddress = require("../services/address.utils");
+const service_auth = require("./middleware/auth.tracker");
 
 router.post("/campaigndetails", auth, async (req, res) => {
 	let owner = extractAddress(req, res);
@@ -110,6 +111,25 @@ router.get("/getCampaign/:campaignID", async (req, res) => {
 		return res.json({
 			status: "failed",
 		});
+	}
+});
+
+router.post("/newDonation", service_auth, async (req, res) => {
+	try {
+		let campaignID = req.body.campaignId;
+		let donationAmount = req.body.amount;
+
+		let campaign = await Campaign.findOne({ campaignId: campaignID });
+
+		campaign.amountRaised += donationAmount;
+		campaign.nbDonations += 1;
+		campaign.lastDonationDate = Date.now();
+
+		await campaign.save();
+
+		return res.json({});
+	} catch (error) {
+		return res.json({ status: "failed" });
 	}
 });
 

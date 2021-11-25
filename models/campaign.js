@@ -14,6 +14,7 @@ const Campaign = mongoose.Schema(
 		nbDonations: { type: Number, default: 0 },
 		nbMilestones: { type: Number, default: 0 },
 		pctReleasePerMilestone: [{ type: Number }],
+		lastDonationDate: { type: Date },
 		signature: { type: String },
 		signatureAddress: { type: String },
 	},
