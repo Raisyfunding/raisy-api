@@ -10,7 +10,7 @@ const tracker_ip1 = process.env.TRACKER_IP1;
 
 const service_auth = (req, res, next) => {
 	let request_ip = requestIP.getClientIp(req);
-	Logger.log(request_ip);
+	Logger.log("error", request_ip);
 
 	if (request_ip == tracker_ip1) {
 		next();
