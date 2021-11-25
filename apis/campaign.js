@@ -116,6 +116,7 @@ router.get("/getCampaign/:campaignID", async (req, res) => {
 
 router.post("/newDonation", service_auth, async (req, res) => {
 	try {
+		Logger.info(req.body);
 		let campaignID = req.body.campaignId;
 		let donationAmount = req.body.amount;
 
@@ -123,7 +124,7 @@ router.post("/newDonation", service_auth, async (req, res) => {
 
 		campaign.amountRaised += donationAmount;
 		campaign.nbDonations += 1;
-		// campaign.lastDonationDate = Date.now();
+		campaign.lastDonationDate = Date.now();
 
 		await campaign.save();
 
