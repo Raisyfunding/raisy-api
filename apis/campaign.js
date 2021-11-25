@@ -90,7 +90,7 @@ router.post("/campaigndetails", auth, async (req, res) => {
 	}
 });
 
-router.get("/fetchAllCampaigns", auth, async (_, res) => {
+router.get("/fetchAllCampaigns", async (_, res) => {
 	let all = await Campaign.find().sort({ title: 1 });
 	return res.json({
 		status: "success",
