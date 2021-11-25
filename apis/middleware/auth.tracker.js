@@ -1,5 +1,6 @@
 require("dotenv").config();
 const requestIP = require("request-ip");
+const Logger = require("../../services/logger");
 
 const tracker_ip1 = process.env.TRACKER_IP1;
 // const tracker_ip2 = process.env.TRACKER_IP2;
@@ -9,6 +10,7 @@ const tracker_ip1 = process.env.TRACKER_IP1;
 
 const service_auth = (req, res, next) => {
 	let request_ip = requestIP.getClientIp(req);
+	Logger.log(request_ip);
 
 	if (request_ip == tracker_ip1) {
 		next();

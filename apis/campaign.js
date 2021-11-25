@@ -119,6 +119,7 @@ router.post("/newDonation", service_auth, async (req, res) => {
 		let campaignID = req.body.campaignId;
 		let donationAmount = req.body.amount;
 
+
 		let campaign = await Campaign.findOne({ campaignId: campaignID });
 
 		campaign.amountRaised += donationAmount;
