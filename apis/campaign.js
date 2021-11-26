@@ -2,7 +2,7 @@ require("dotenv").config();
 // const { default: axios } = require("axios");
 const router = require("express").Router();
 
-// const ethers = require("ethers");
+const ethers = require("ethers");
 
 const mongoose = require("mongoose");
 const Campaign = mongoose.model("Campaign");
@@ -116,9 +116,13 @@ router.get("/getCampaign/:campaignID", async (req, res) => {
 
 router.post("/newDonation", service_auth, async (req, res) => {
 	try {
-		Logger.info(req.body);
-		let campaignID = req.body.campaignId;
-		let donationAmount = req.body.amount;
+		const { args, blockNumber, transactionHash } = req.body;
+		const [campaignIdBN, donorC, amountBN, paytokenC] = args;
+
+		let campaignID = parseInt(campaignIdBN.hex);
+		let donationAmount = ethers.utils.formatEther(
+			ethers.BigNumber.from(amountBN.hex)
+		);
 
 		let campaign = await Campaign.findOne({ campaignId: campaignID });
 
