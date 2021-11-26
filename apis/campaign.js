@@ -120,9 +120,7 @@ router.post("/newDonation", service_auth, async (req, res) => {
 		const [campaignIdBN, donorC, amountBN, paytokenC] = args;
 
 		let campaignID = parseInt(campaignIdBN.hex);
-		let donationAmount = ethers.utils.formatEther(
-			ethers.BigNumber.from(amountBN.hex)
-		);
+		let donationAmount = parseInt(ethers.utils.formatEther(amountBN));
 
 		let campaign = await Campaign.findOne({ campaignId: campaignID });
 
