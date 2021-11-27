@@ -54,7 +54,7 @@ router.post("/newVoteSession", service_auth, async (req, res) => {
 router.post("newVote", service_auth, async (req, res) => {
 	try {
 		const { args, blockNumber, transactionHash } = req.body;
-		const [campaignIdBN, voteSessionIdBN, voterC, voteRatioBN] = args;
+		const [voterC, campaignIdBN, voteSessionIdBN, voteRatioBN] = args;
 
 		const campaignID = parseInt(campaignIdBN.hex);
 		const voteSessionID = parseInt(voteSessionIdBN.hex);
