@@ -89,7 +89,7 @@ router.post("endVoteSession", service_auth, async (req, res) => {
 
 		let voteSession = await VoteSession.findOne({
 			campaignId: campaignID,
-			id: voteSessionID,
+			id: voteSessionID - 1,
 		});
 
 		voteSession.inProgress = false;
