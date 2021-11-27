@@ -101,4 +101,23 @@ router.post("endVoteSession", service_auth, async (req, res) => {
 	}
 });
 
+router.get("/lastVoteSession/:campaignID", async (req, res) => {
+	try {
+		let campaignID = req.params.campaignID;
+
+		let voteSession = VoteSession.findOne(
+			{ campaignId: campaignID },
+			{},
+			{ sort: { id: -1 } }
+		);
+
+		return res.json({
+			status: "success",
+			data: voteSession,
+		});
+	} catch (error) {
+		return res.json({ status: "failed", error: error });
+	}
+});
+
 module.exports = router;
