@@ -105,7 +105,7 @@ router.get("/lastVoteSession/:campaignID", async (req, res) => {
 	try {
 		let campaignID = req.params.campaignID;
 
-		let voteSession = VoteSession.findOne(
+		let voteSession = await VoteSession.findOne(
 			{ campaignId: campaignID },
 			{},
 			{ sort: { id: -1 } }
