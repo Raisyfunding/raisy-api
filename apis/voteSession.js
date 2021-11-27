@@ -2,16 +2,17 @@ require("dotenv").config();
 // const { default: axios } = require("axios");
 const router = require("express").Router();
 
-const ethers = require("ethers");
+// const ethers = require("ethers");
 
 const mongoose = require("mongoose");
 const VoteSession = mongoose.model("VoteSession");
+const Campaign = mongoose.model("Campaign");
 
-// const auth = require("./middleware/auth");
-// const validateSignature = require("../apis/middleware/auth.sign");
+const auth = require("./middleware/auth");
+const validateSignature = require("../apis/middleware/auth.sign");
 
 // const Logger = require("../services/logger");
-// const extractAddress = require("../services/address.utils");
+const extractAddress = require("../services/address.utils");
 const service_auth = require("./middleware/auth.tracker");
 
 router.post("/newVoteSession", service_auth, async (req, res) => {
@@ -67,6 +68,7 @@ router.post("newVote", service_auth, async (req, res) => {
 		});
 
 		voteSession.voteRatio = voteRatio;
+		voteSession.nbVotes += 1;
 
 		await voteSession.save();
 
@@ -100,6 +102,56 @@ router.post("endVoteSession", service_auth, async (req, res) => {
 		return res.json({ status: "failed", error: error });
 	}
 });
+
+router.post(
+	"/addMessage/:campaignID/:voteSessionID",
+	auth,
+	async (req, res) => {
+		let owner = extractAddress(req, res);
+		let signature = req.body.signature;
+		let retrievedAddr = req.body.signatureAddress;
+
+		let isValidsignature = await validateSignature(
+			owner,
+			signature,
+			retrievedAddr
+		);
+		if (!isValidsignature) {
+			return res.status(400).json({
+				status: "failed",
+				data: "Invalid signature from user",
+			});
+		}
+
+		try {
+			let campaignID = req.params.campaignID;
+			let voteSessionID = req.params.voteSessionID;
+
+			let message = req.body.message;
+			const campaign = await Campaign.findOne({ campaignId: campaignID });
+
+			if (campaign.creator !== owner) {
+				return res.json({
+					status: "failed",
+					data: "Only the creator of the campaign can add a message",
+				});
+			} else {
+				let _voteSession = await VoteSession.findOne({
+					campaignId: campaignID,
+					id: voteSessionID,
+				});
+
+				_voteSession.message = message;
+
+				_voteSession.save();
+			}
+
+			return res.json({ status: "success" });
+		} catch (error) {
+			return res.json({ status: "failed", error: error });
+		}
+	}
+);
 
 router.get("/lastVoteSession/:campaignID", async (req, res) => {
 	try {

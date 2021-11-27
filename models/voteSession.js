@@ -7,6 +7,8 @@ const VoteSession = mongoose.Schema({
 	voteRatio: { type: Number, default: 0 },
 	inProgress: { type: Boolean, default: false, required: true },
 	numUnsuccessfulVotes: { type: Number, default: 0 },
+	message: { type: String },
+	nbVotes: { type: Number, default: 0 },
 });
 
 VoteSession.index({ campaignId: 1 }, { unique: true });
