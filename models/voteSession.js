@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const VoteSession = mongoose.Schema({
-	campaignId: { type: Number, required: true, unique: true },
+	campaignId: { type: Number, required: true },
 	id: { type: Number, required: true, default: 0 },
 	startBlock: { type: Number, required: true },
 	voteRatio: { type: Number, default: 0 },
