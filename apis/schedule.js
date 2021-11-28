@@ -74,6 +74,30 @@ router.post("/fundsClaimed", service_auth, async (req, res) => {
 	}
 });
 
+router.post("/newRefundVote", service_auth, async (req, res) => {
+	try {
+		const { args, blockNumber, transactionHash } = req.body;
+		const [campaignIdBN, voterC, wantsRefundBN] = args;
+
+		const campaignID = parseInt(campaignIdBN.hex);
+		const wantsRefund = parseInt(wantsRefundBN.hex);
+		const voter = voterC.toLowerCase();
+
+		// First update the schedule
+		let schedule = await Schedule.findOne({ campaignId: campaignID });
+
+		schedule.wantsRefund = wantsRefund;
+
+		// Then send an email to the voter to confirm
+
+		await schedule.save();
+
+		return res.json({});
+	} catch (error) {
+		return res.json({ status: "failed", error: error });
+	}
+});
+
 router.get("/getSchedule/:campaignID", async (req, res) => {
 	try {
 		let campaignID = req.params.campaignID;
