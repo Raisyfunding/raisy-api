@@ -51,7 +51,7 @@ router.post("/newVoteSession", service_auth, async (req, res) => {
 	}
 });
 
-router.post("newVote", service_auth, async (req, res) => {
+router.post("/newVote", service_auth, async (req, res) => {
 	try {
 		const { args, blockNumber, transactionHash } = req.body;
 		const [voterC, campaignIdBN, voteSessionIdBN, voteRatioBN] = args;
@@ -78,7 +78,7 @@ router.post("newVote", service_auth, async (req, res) => {
 	}
 });
 
-router.post("endVoteSession", service_auth, async (req, res) => {
+router.post("/endVoteSession", service_auth, async (req, res) => {
 	try {
 		const { args, blockNumber, transactionHash } = req.body;
 		const [campaignIdBN, voteSessionIdBN, numUnsuccessfulVotesBN] = args;
