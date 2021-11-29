@@ -1,5 +1,8 @@
 # Raisy-api
-Code for the Raisy Funding backend. 
+
+This repository contains Raisy Funding backend.
+
+![Logo](https://testnet.raisy.io/logo.png)
 
 ## Project Setup
 ```
